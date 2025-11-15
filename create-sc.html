@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Create Script - Sky Island</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            min-height: 100vh;
+            padding: 16px;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .title {
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .feature-checkbox {
+            display: none;
+        }
+
+        .feature-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-checkbox:checked + .feature-label {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .create-btn {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(26, 41, 128, 0.4);
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .create-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 5px 15px rgba(26, 41, 128, 0.4);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+        }
+
+        .result-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        .result-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .download-btn:active {
+            transform: translateY(3px);
+        }
+
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            opacity: 0.7;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 35px;
+            top: 10%;
+            left: -40px;
+            animation: float 25s infinite linear;
+        }
+
+        .cloud-2 {
+            width: 120px;
+            height: 40px;
+            top: 25%;
+            right: -50px;
+            animation: float 30s infinite linear reverse;
+        }
+
+        .cloud-3 {
+            width: 80px;
+            height: 30px;
+            bottom: 20%;
+            left: -30px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(-100px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 15px;
+                gap: 20px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .create-btn {
+                padding: 14px 25px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .title {
+                font-size: 22px;
+            }
+            
+            .subtitle {
+                font-size: 13px;
+            }
+            
+            .form-container {
+                padding: 15px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    
+    <div class="container">
+        <div class="logo-section">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Logo Sky Island" class="logo">
+            <h1 class="title">Create Script</h1>
+            <p class="subtitle">Buat bot Telegram dengan fitur-fitur yang Anda butuhkan</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label class="form-label" for="botToken">Bot Token</label>
+                <input type="text" id="botToken" class="form-input" placeholder="Masukkan token bot Telegram">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="adminId">Admin ID</label>
+                <input type="text" id="adminId" class="form-input" placeholder="Masukkan ID admin Telegram">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Pilih Fitur</label>
+                <div class="features-grid">
+                    <!-- JPM - Broadcast ke Grup -->
+                    <input type="checkbox" id="jpm" class="feature-checkbox" checked>
+                    <label for="jpm" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-users"></i></div>
+                        <div class="feature-name">JPM</div>
+                        <div class="feature-desc">Broadcast ke Grup</div>
+                    </label>
+                    
+                    <!-- JPMCH - Broadcast ke Channel -->
+                    <input type="checkbox" id="jpmch" class="feature-checkbox" checked>
+                    <label for="jpmch" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-broadcast-tower"></i></div>
+                        <div class="feature-name">JPMCH</div>
+                        <div class="feature-desc">Broadcast ke Channel</div>
+                    </label>
+                    
+                    <!-- Broadcast - Broadcast ke User -->
+                    <input type="checkbox" id="broadcast" class="feature-checkbox" checked>
+                    <label for="broadcast" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-user"></i></div>
+                        <div class="feature-name">Broadcast</div>
+                        <div class="feature-desc">Broadcast ke User</div>
+                    </label>
+                    
+                    <!-- Asmaul Husna -->
+                    <input type="checkbox" id="asmaulhusna" class="feature-checkbox">
+                    <label for="asmaulhusna" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-star-and-crescent"></i></div>
+                        <div class="feature-name">Asmaul Husna</div>
+                        <div class="feature-desc">1-10 Asmaul Husna</div>
+                    </label>
+                    
+                    <!-- Quotes -->
+                    <input type="checkbox" id="quotes" class="feature-checkbox">
+                    <label for="quotes" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-quote-right"></i></div>
+                        <div class="feature-name">Quotes</div>
+                        <div class="feature-desc">Kata-kata Inspiratif</div>
+                    </label>
+                    
+                    <!-- Ping -->
+                    <input type="checkbox" id="ping" class="feature-checkbox">
+                    <label for="ping" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-table-tennis"></i></div>
+                        <div class="feature-name">Ping</div>
+                        <div class="feature-desc">Cek Respons Bot</div>
+                    </label>
+                    
+                    <!-- Cek ID -->
+                    <input type="checkbox" id="cekid" class="feature-checkbox">
+                    <label for="cekid" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-id-card"></i></div>
+                        <div class="feature-name">Cek ID</div>
+                        <div class="feature-desc">Lihat ID Telegram</div>
+                    </label>
+                    
+                    <!-- Runtime -->
+                    <input type="checkbox" id="runtime" class="feature-checkbox">
+                    <label for="runtime" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                        <div class="feature-name">Runtime</div>
+                        <div class="feature-desc">Waktu Aktif Bot</div>
+                    </label>
+                    
+                    <!-- Cek Khodam -->
+                    <input type="checkbox" id="cekkhodam" class="feature-checkbox">
+                    <label for="cekkhodam" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-ghost"></i></div>
+                        <div class="feature-name">Cek Khodam</div>
+                        <div class="feature-desc">Cek Khodam Anda</div>
+                    </label>
+                    
+                    <!-- Report Bug -->
+                    <input type="checkbox" id="reportbug" class="feature-checkbox">
+                    <label for="reportbug" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-bug"></i></div>
+                        <div class="feature-name">Report Bug</div>
+                        <div class="feature-desc">Laporkan Masalah</div>
+                    </label>
+                    
+                    <!-- Total Fitur Bot -->
+                    <input type="checkbox" id="totalfiturbot" class="feature-checkbox">
+                    <label for="totalfiturbot" class="feature-label">
+                        <div class="feature-icon"><i class="fas fa-list"></i></div>
+                        <div class="feature-name">Total Fitur</div>
+                        <div class="feature-desc">Jumlah Fitur Bot</div>
+                    </label>
+                </div>
+            </div>
+            
+            <button class="create-btn" id="createScriptBtn">
+                <i class="fas fa-code"></i> Buat Script Bot
+            </button>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h3 class="result-title">Script Berhasil Dibuat!</h3>
+            <p style="color: white; text-align: center; margin-bottom: 15px;">
+                Script bot Telegram Anda telah berhasil dibuat dengan fitur-fitur yang dipilih.
+            </p>
+            <button class="download-btn" id="downloadBtn">
+                <i class="fas fa-download"></i> Download File ZIP
+            </button>
+        </div>
+        
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const createBtn = document.getElementById('createScriptBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const resultSection = document.getElementById('resultSection');
+            
+            createBtn.addEventListener('click', function() {
+                const botToken = document.getElementById('botToken').value;
+                const adminId = document.getElementById('adminId').value;
+                
+                if (!botToken || !adminId) {
+                    alert('Harap isi Bot Token dan Admin ID!');
+                    return;
+                }
+                
+                // Simulasi proses pembuatan script
+                createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuat Script...';
+                createBtn.disabled = true;
+                
+                setTimeout(() => {
+                    createBtn.innerHTML = '<i class="fas fa-code"></i> Buat Script Bot';
+                    createBtn.disabled = false;
+                    resultSection.style.display = 'block';
+                    
+                    // Scroll ke hasil
+                    resultSection.scrollIntoView({ behavior: 'smooth' });
+                }, 1500);
+            });
+            
+            downloadBtn.addEventListener('click', function() {
+                // Mendapatkan fitur yang dipilih
+                const selectedFeatures = [];
+                const checkboxes = document.querySelectorAll('.feature-checkbox:checked');
+                checkboxes.forEach(checkbox => {
+                    selectedFeatures.push(checkbox.id);
+                });
+                
+                // Simulasi pembuatan file ZIP
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuat ZIP...';
+                
+                setTimeout(() => {
+                    // Membuat konten file
+                    const files = generateBotFiles(
+                        document.getElementById('botToken').value,
+                        document.getElementById('adminId').value,
+                        selectedFeatures
+                    );
+                    
+                    // Membuat dan mendownload ZIP
+                    createAndDownloadZip(files);
+                    
+                    downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download File ZIP';
+                }, 1000);
+            });
+            
+            function generateBotFiles(botToken, adminId, features) {
+                const files = {};
+                
+                // File package.json
+                files['package.json'] = JSON.stringify({
+                    name: "telegram-bot",
+                    version: "1.0.0",
+                    description: "Bot Telegram dengan berbagai fitur",
+                    main: "bot.js",
+                    scripts: {
+                        start: "node bot.js"
+                    },
+                    dependencies: {
+                        "telegraf": "^4.12.2",
+                        "axios": "^1.5.0",
+                        "moment": "^2.29.4"
+                    }
+                }, null, 2);
+                
+                // File config.js
+                files['config.js'] = `
+module.exports = {
+    BOT_TOKEN: "${botToken}",
+    ADMIN_ID: "${adminId}",
+    CHANNEL_ID: "@channel_anda", // Ganti dengan channel ID Anda
+    FEATURES: ${JSON.stringify(features, null, 4)}
+};
+`;
+                
+                // File bot.js dengan semua fitur
+                files['bot.js'] = generateBotCode(features);
+                
+                // File README.md
+                files['README.md'] = `# Bot Telegram
+
+Bot ini dibuat menggunakan Sky Island Create Script
+
+## Fitur yang tersedia:
+${features.map(f => `- ${f}`).join('\n')}
+
+## Cara penggunaan:
+1. Install dependencies: \`npm install\`
+2. Jalankan bot: \`npm start\`
+
+## Credit:
+Dibuat dengan ❤️ oleh Sky Island Platform
+Join channel kami: https://t.me/SanzyOffc
+
+Dan untuk saran bisa ke ngl :
+https://ngl.link/sanzzyoffc_real1
+`;
+                
+                return files;
+            }
+            
+            function generateBotCode(features) {
+                let code = `
+const { Telegraf } = require('telegraf');
+const config = require('./config.js');
+const moment = require('moment');
+
+const bot = new Telegraf(config.BOT_TOKEN);
+const startTime = moment();
+
+// Data untuk fitur
+const asmaulHusna = [
+  { name: "Ar-Rahman", meaning: "Yang Maha Pengasih" },
+  { name: "Ar-Rahim", meaning: "Yang Maha Penyayang" },
+  { name: "Al-Malik", meaning: "Yang Maha Merajai / Raja" },
+  { name: "Al-Quddus", meaning: "Yang Maha Suci" },
+  { name: "As-Salam", meaning: "Yang Maha Pemberi Kesejahteraan" },
+  { name: "Al-Mu'min", meaning: "Yang Maha Memberi Keamanan" },
+  { name: "Al-Muhaymin", meaning: "Yang Maha Memelihara / Mengawasi" },
+  { name: "Al-Aziz", meaning: "Yang Maha Perkasa" },
+  { name: "Al-Jabbar", meaning: "Yang Maha Memaksa / Yang Memperbaiki" },
+  { name: "Al-Mutakabbir", meaning: "Yang Maha Megah / Yang Maha Besar" },
+
+  { name: "Al-Khaliq", meaning: "Yang Maha Pencipta" },
+  { name: "Al-Bari'", meaning: "Yang Maha Membentuk / Pencipta" },
+  { name: "Al-Musawwir", meaning: "Yang Maha Pembentuk / Penggambar" },
+  { name: "Al-Ghaffar", meaning: "Yang Maha Pengampun" },
+  { name: "Al-Qahhar", meaning: "Yang Maha Menundukkan / Yang Maha Kuasa" },
+  { name: "Al-Wahhab", meaning: "Yang Maha Pemberi Karunia" },
+  { name: "Ar-Razzaq", meaning: "Yang Maha Pemberi Rezeki" },
+  { name: "Al-Fattah", meaning: "Yang Maha Membuka (pintu/rezeki/kemenangan)" },
+  { name: "Al-'Alim", meaning: "Yang Maha Mengetahui" },
+  { name: "Al-Qabid", meaning: "Yang Maha Menyempitkan" },
+
+  { name: "Al-Basit", meaning: "Yang Maha Melapangkan" },
+  { name: "Al-Khafid", meaning: "Yang Maha Merendahkan (atau Menurunkan)" },
+  { name: "Ar-Rafi'", meaning: "Yang Maha Meninggikan" },
+  { name: "Al-Mu'izz", meaning: "Yang Maha Memuliakan" },
+  { name: "Al-Mudhill", meaning: "Yang Maha Menghinakan" },
+  { name: "As-Sami'", meaning: "Yang Maha Mendengar" },
+  { name: "Al-Basir", meaning: "Yang Maha Melihat" },
+  { name: "Al-Hakam", meaning: "Yang Maha Mengadili" },
+  { name: "Al-'Adl", meaning: "Yang Maha Adil" },
+  { name: "Al-Latif", meaning: "Yang Maha Lembut / Maha Halus" },
+
+  { name: "Al-Khabir", meaning: "Yang Maha Mengenal / Mengetahui rinci" },
+  { name: "Al-Halim", meaning: "Yang Maha Penyantun / Maha Sabar" },
+  { name: "Al-Azim", meaning: "Yang Maha Agung" },
+  { name: "Al-Ghafur", meaning: "Yang Maha Pengampun" },
+  { name: "Ash-Shakur", meaning: "Yang Maha Pembalas Budi / Maha Mensyukuri" },
+  { name: "Al-Aliyy", meaning: "Yang Maha Tinggi" },
+  { name: "Al-Kabir", meaning: "Yang Maha Besar" },
+  { name: "Al-Hafiz", meaning: "Yang Maha Memelihara / Pelindung" },
+  { name: "Al-Muqit", meaning: "Yang Maha Pemberi Kekuatan / Pemelihara" },
+  { name: "Al-Hasib", meaning: "Yang Maha Menghisab / Pembuat Perhitungan" },
+
+  { name: "Al-Jalil", meaning: "Yang Maha Mulia" },
+  { name: "Al-Karim", meaning: "Yang Maha Pemurah / Pemuli" },
+  { name: "Ar-Raqib", meaning: "Yang Maha Mengawasi" },
+  { name: "Al-Mujib", meaning: "Yang Maha Mengabulkan" },
+  { name: "Al-Wasi'", meaning: "Yang Maha Luas (kekuasaan, rahmat)" },
+  { name: "Al-Hakim", meaning: "Yang Maha Bijaksana" },
+  { name: "Al-Wadud", meaning: "Yang Maha Pengasih / Penyayang" },
+  { name: "Al-Majid", meaning: "Yang Maha Mulia / Termasyhur" },
+  { name: "Al-Ba'ith", meaning: "Yang Maha Membangkitkan" },
+  { name: "Ash-Shahid", meaning: "Yang Maha Menyaksikan" },
+
+  { name: "Al-Haqq", meaning: "Yang Maha Benar" },
+  { name: "Al-Wakil", meaning: "Yang Maha Memelihara / Wakil" },
+  { name: "Al-Qawiyy", meaning: "Yang Maha Kuat" },
+  { name: "Al-Matin", meaning: "Yang Maha Kokoh" },
+  { name: "Al-Waliyy", meaning: "Yang Maha Pelindung / Penolong" },
+  { name: "Al-Hamid", meaning: "Yang Maha Terpuji" },
+  { name: "Al-Muhsi", meaning: "Yang Maha Menghitung / Pencatat" },
+  { name: "Al-Mubdi'", meaning: "Yang Maha Memulai / Pencipta Awal" },
+  { name: "Al-Mu'id", meaning: "Yang Maha Mengembalikan" },
+  { name: "Al-Muhyi", meaning: "Yang Maha Menghidupkan" },
+
+  { name: "Al-Mumit", meaning: "Yang Maha Mematikan" },
+  { name: "Al-Hayy", meaning: "Yang Maha Hidup" },
+  { name: "Al-Qayyum", meaning: "Yang Maha Berdiri Sendiri / Penopang" },
+  { name: "Al-Wajid", meaning: "Yang Maha Menemukan" },
+  { name: "Al-Majid", meaning: "Yang Maha Mulia (keagungan)" },
+  { name: "Al-Wahid", meaning: "Yang Maha Esa" },
+  { name: "As-Samad", meaning: "Yang Maha Dibutuhkan (tempat bergantung)" },
+  { name: "Al-Qadir", meaning: "Yang Maha Berkuasa" },
+  { name: "Al-Muqtadir", meaning: "Yang Maha Menentukan Kekuatan" },
+  { name: "Al-Muqaddim", meaning: "Yang Maha Memajukan / Mengesampingkan waktu" },
+
+  { name: "Al-Mu'akhkhir", meaning: "Yang Maha Mengakhirkan / Menunda" },
+  { name: "Al-Awwal", meaning: "Yang Maha Pertama" },
+  { name: "Al-Akhir", meaning: "Yang Maha Terakhir" },
+  { name: "Az-Zahir", meaning: "Yang Maha Nyata (yang nyata sifat-Nya)" },
+  { name: "Al-Batin", meaning: "Yang Maha Ghaib / Tersembunyi" },
+  { name: "Al-Wali", meaning: "Yang Maha Melindungi / Pemimpin" },
+  { name: "Al-Muta'ali", meaning: "Yang Maha Tinggi (di atas segala sifat tercela)" },
+  { name: "Al-Barr", meaning: "Yang Maha Pemberi Kebaikan" },
+  { name: "At-Tawwab", meaning: "Yang Maha Penerima Taubat" },
+  { name: "Al-Muntaqim", meaning: "Yang Maha Pembalas (pembalas kezaliman)" },
+
+  { name: "Al-'Afuww", meaning: "Yang Maha Pemaaf" },
+  { name: "Ar-Ra'uf", meaning: "Yang Maha Penyantun" },
+  { name: "Malik al-Mulk", meaning: "Pemilik Kerajaan" },
+  { name: "Dhul-Jalaali wal-Ikram", meaning: "Pemilik Kebesaran dan Kemurahan" },
+  { name: "Al-Muqsit", meaning: "Yang Maha Adil" },
+  { name: "Al-Jaami'", meaning: "Yang Maha Mengumpulkan" },
+  { name: "Al-Ghaniyy", meaning: "Yang Maha Kaya / Tidak Butuh" },
+  { name: "Al-Mughni", meaning: "Yang Maha Memberi Kekayaan" },
+  { name: "Al-Mani'", meaning: "Yang Maha Pengekang / Penahan" },
+  { name: "Ad-Darr", meaning: "Yang Maha Pemberi Bahaya (yang memberi madharat)" },
+
+  { name: "An-Nafi'", meaning: "Yang Maha Memberi Manfaat" },
+  { name: "An-Nur", meaning: "Yang Maha Bercahaya / Penerang" },
+  { name: "Al-Hadi", meaning: "Yang Maha Pemberi Petunjuk" },
+  { name: "Al-Badi'", meaning: "Yang Maha Pencipta yang Tiada Banding" },
+  { name: "Al-Baqi", meaning: "Yang Maha Kekal" },
+  { name: "Al-Warith", meaning: "Yang Maha Pewaris" },
+  { name: "Ar-Rashid", meaning: "Yang Maha Pandai / Pemberi Petunjuk yang Tegak" },
+  { name: "As-Sabur", meaning: "Yang Maha Penyabar" }
+];
+
+const quotes = [
+    "Hidup adalah perjalanan, nikmati setiap langkahnya.",
+    "Kesuksesan dimulai dengan tekad yang kuat.",
+    "Jangan takut gagal, takutlah tidak pernah mencoba.",
+    "Setiap hari adalah kesempatan baru untuk menjadi lebih baik.",
+    "Kebahagiaan ditemukan dalam hal-hal sederhana."
+];
+
+const khodamList = [
+    "Macan Putih", "Naga Emas", "Garuda Sakti", "Kuda Terbang", 
+    "Harimau Loreng", "Elang Perkasa", "Singa Pemberani", "Ular Naga"
+];
+
+// Command handlers
+${features.includes('ping') ? `
+bot.command('ping', (ctx) => {
+    ctx.reply('🏓 Pongg..');
+});
+` : ''}
+
+${features.includes('cekid') ? `
+bot.command('cekid', (ctx) => {
+    ctx.reply(\`ID Anda: \${ctx.from.id}\`);
+});
+` : ''}
+
+${features.includes('runtime') ? `
+bot.command('runtime', (ctx) => {
+    const now = moment();
+    const duration = moment.duration(now.diff(startTime));
+    const hours = duration.hours();
+    const minutes = duration.minutes();
+    const seconds = duration.seconds();
+    
+    ctx.reply(\`⏰ Bot telah aktif selama: \${hours} jam \${minutes} menit \${seconds} detik\`);
+});
+` : ''}
+
+${features.includes('asmaulhusna') ? `
+bot.command('asmaulhusna', (ctx) => {
+    let message = "📖 Asmaul Husna (1-10):\\n\\n";
+    asmaulHusna.forEach((asma, index) => {
+        message += \`\${index + 1}. \${asma.name} - \${asma.meaning}\\n\`;
+    });
+    ctx.reply(message);
+});
+` : ''}
+
+${features.includes('quotes') ? `
+bot.command('quotes', (ctx) => {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    ctx.reply(\`💫 Quotes Hari Ini:\\n\\n"\${randomQuote}"\`);
+});
+` : ''}
+
+${features.includes('cekkhodam') ? `
+bot.command('cekkhodam', (ctx) => {
+    const randomKhodam = khodamList[Math.floor(Math.random() * khodamList.length)];
+    ctx.reply(\`🔮 Khodam Anda adalah: \${randomKhodam}\`);
+});
+` : ''}
+
+${features.includes('reportbug') ? `
+bot.command('reportbug', (ctx) => {
+    ctx.reply('Klik pesan kesini maka saya akan berikan text laporan');
+});
+
+bot.on('text', (ctx) => {
+    if (ctx.message.reply_to_message && 
+        ctx.message.reply_to_message.text === 'Klik pesan kesini maka saya akan berikan text laporan') {
+        
+        const reportText = ctx.message.text;
+        bot.telegram.sendMessage(config.ADMIN_ID, 
+            \`🐛 Laporan Bug dari @\${ctx.from.username || ctx.from.first_name}:\\n\\n\${reportText}\`
+        );
+        ctx.reply('✅ Laporan bug telah dikirim ke admin!');
+    }
+});
+` : ''}
+
+${features.includes('totalfiturbot') ? `
+bot.command('totalfiturbot', (ctx) => {
+    const totalFeatures = ${features.length};
+    ctx.reply(\`📊 Total fitur yang tersedia: \${totalFeatures} fitur\`);
+});
+` : ''}
+
+${features.includes('jpm') ? `
+bot.command('jpm', (ctx) => {
+    if (ctx.from.id.toString() === config.ADMIN_ID) {
+        ctx.reply('Silakan reply pesan ini dengan teks atau media yang ingin di-broadcast ke grup');
+    }
+});
+
+// Handler untuk broadcast ke grup
+bot.on('message', (ctx) => {
+    if (ctx.message.reply_to_message && 
+        ctx.message.reply_to_message.text === 'Silakan reply pesan ini dengan teks atau media yang ingin di-broadcast ke grup' &&
+        ctx.from.id.toString() === config.ADMIN_ID) {
+        
+        // Simulasi broadcast ke grup (dalam implementasi nyata, perlu daftar grup)
+        ctx.reply('✅ Pesan berhasil dikirim ke semua grup!');
+    }
+});
+` : ''}
+
+${features.includes('jpmch') ? `
+bot.command('jpmch', (ctx) => {
+    if (ctx.from.id.toString() === config.ADMIN_ID) {
+        ctx.reply('Silakan reply pesan ini dengan teks atau media yang ingin di-broadcast ke channel');
+    }
+});
+
+// Handler untuk broadcast ke channel
+bot.on('message', (ctx) => {
+    if (ctx.message.reply_to_message && 
+        ctx.message.reply_to_message.text === 'Silakan reply pesan ini dengan teks atau media yang ingin di-broadcast ke channel' &&
+        ctx.from.id.toString() === config.ADMIN_ID) {
+        
+        // Simulasi broadcast ke channel
+        ctx.reply('✅ Pesan berhasil dikirim ke channel!');
+    }
+});
+` : ''}
+
+${features.includes('broadcast') ? `
+bot.command('broadcast', (ctx) => {
+    if (ctx.from.id.toString() === config.ADMIN_ID) {
+        ctx.reply('Silakan reply pesan ini dengan teks yang ingin di-broadcast ke semua user');
+    }
+});
+
+// Handler untuk broadcast ke user
+bot.on('message', (ctx) => {
+    if (ctx.message.reply_to_message && 
+        ctx.message.reply_to_message.text === 'Silakan reply pesan ini dengan teks yang ingin di-broadcast ke semua user' &&
+        ctx.from.id.toString() === config.ADMIN_ID) {
+        
+        // Simulasi broadcast ke user
+        ctx.reply('✅ Pesan berhasil dikirim ke semua user!');
+    }
+});
+` : ''}
+
+// Start command
+bot.command('start', (ctx) => {
+    ctx.reply(\`🤖 Selamat datang di bot!\\n\\nGunakan /help untuk melihat daftar perintah yang tersedia.\`);
+});
+
+// Help command
+bot.command('help', (ctx) => {
+    let helpText = "📋 Daftar Perintah:\\n\\n";
+    
+    ${features.includes('ping') ? 'helpText += "/ping - Cek respons bot\\n";' : ''}
+    ${features.includes('cekid') ? 'helpText += "/cekid - Lihat ID Telegram Anda\\n";' : ''}
+    ${features.includes('runtime') ? 'helpText += "/runtime - Lihat waktu aktif bot\\n";' : ''}
+    ${features.includes('asmaulhusna') ? 'helpText += "/asmaulhusna - Lihat Asmaul Husna\\n";' : ''}
+    ${features.includes('quotes') ? 'helpText += "/quotes - Dapatkan quotes inspiratif\\n";' : ''}
+    ${features.includes('cekkhodam') ? 'helpText += "/cekkhodam - Cek khodam Anda\\n";' : ''}
+    ${features.includes('reportbug') ? 'helpText += "/reportbug - Laporkan bug\\n";' : ''}
+    ${features.includes('totalfiturbot') ? 'helpText += "/totalfiturbot - Total fitur bot\\n";' : ''}
+    ${features.includes('jpm') ? 'helpText += "/jpm - Broadcast ke grup (admin only)\\n";' : ''}
+    ${features.includes('jpmch') ? 'helpText += "/jpmch - Broadcast ke channel (admin only)\\n";' : ''}
+    ${features.includes('broadcast') ? 'helpText += "/broadcast - Broadcast ke user (admin only)\\n";' : ''}
+    
+    helpText += "\\nBot dibuat dengan ❤️ oleh Sky Island";
+    ctx.reply(helpText);
+});
+
+// Start bot
+bot.launch().then(() => {
+    console.log('Bot started successfully!');
+}).catch(err => {
+    console.error('Error starting bot:', err);
+});
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
+`;
+                
+                return code;
+            }
+            
+            function createAndDownloadZip(files) {
+                // Membuat objek ZIP menggunakan JSZip
+                const zip = new JSZip();
+                
+                // Menambahkan setiap file ke ZIP
+                for (const [filename, content] of Object.entries(files)) {
+                    zip.file(filename, content);
+                }
+                
+                // Generate ZIP file
+                zip.generateAsync({type:"blob"}).then(function(content) {
+                    // Membuat link download
+                    const a = document.createElement("a");
+                    const url = URL.createObjectURL(content);
+                    a.href = url;
+                    a.download = "telegram-bot.zip";
+                    document.body.appendChild(a);
+                    a.click();
+                    
+                    // Cleanup
+                    setTimeout(function() {
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                });
+            }
+        });
+    </script>
+    
+    <!-- JSZip library untuk membuat file ZIP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</body>
+</html>

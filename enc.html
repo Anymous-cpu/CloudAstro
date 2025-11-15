@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sky Island - JavaScript Encryptor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            min-height: 100vh;
+            padding: 16px;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .title {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .tools-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .tool-card:active {
+            transform: scale(0.98);
+        }
+
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .tool-text {
+            color: white;
+            flex: 1;
+        }
+
+        .tool-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .tool-desc {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+        }
+
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            opacity: 0.7;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 35px;
+            top: 10%;
+            left: -40px;
+            animation: float 25s infinite linear;
+        }
+
+        .cloud-2 {
+            width: 120px;
+            height: 40px;
+            top: 25%;
+            right: -50px;
+            animation: float 30s infinite linear reverse;
+        }
+
+        .cloud-3 {
+            width: 80px;
+            height: 30px;
+            bottom: 20%;
+            left: -30px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(-100px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        /* Form Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .code-input {
+            height: 150px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        .file-upload-container {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .file-upload-container:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-info {
+            margin-top: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .encrypt-btn {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(26, 41, 128, 0.4);
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .encrypt-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 5px 15px rgba(26, 41, 128, 0.4);
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+
+        .result-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .code-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        .code-content {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: white;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .copy-btn, .download-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: white;
+        }
+
+        .copy-btn:active, .download-btn:active {
+            transform: translateY(2px);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 16px;
+        }
+
+        .placeholder-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            padding: 40px 0;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 15px;
+                gap: 25px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .title {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .tool-card {
+                padding: 15px;
+            }
+            
+            .tool-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .encrypt-btn {
+                padding: 14px 25px;
+                font-size: 16px;
+            }
+            
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .title {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .tool-card {
+                padding: 12px;
+            }
+            
+            .tool-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .form-container {
+                padding: 15px;
+            }
+        }
+
+        /* Landscape mode */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 8px;
+            }
+            
+            .container {
+                padding: 10px;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Prevent zoom on iOS */
+        input, select, textarea {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    
+    <div class="container">
+        <div class="logo-section">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Logo Sky Island" class="logo">
+            <h1 class="title">JavaScript Encryptor</h1>
+            <p class="subtitle">Enkripsi kode JavaScript Anda untuk melindungi intellectual property</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label class="form-label">Masukkan Kode JavaScript</label>
+                <textarea class="form-input code-input" id="codeInput" placeholder="// Masukkan kode JavaScript Anda di sini&#10;function helloWorld() {&#10;    console.log('Hello World!');&#10;}&#10;helloWorld();"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Atau Upload File JavaScript</label>
+                <div class="file-upload-container" id="fileUploadContainer">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <p>Klik untuk upload file atau drag & drop</p>
+                    <p class="file-info">Format yang didukung: .js</p>
+                    <input type="file" id="fileInput" class="file-input" accept=".js">
+                    <div id="fileName" class="file-info"></div>
+                </div>
+            </div>
+            
+            <button class="encrypt-btn" id="encryptBtn">
+                <i class="fas fa-lock"></i> Enkripsi Kode
+            </button>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h3 class="result-title">Hasil Kode Terenkripsi</h3>
+            <div class="code-container">
+                <div class="placeholder-text" id="placeholder">
+                    Hasil kode terenkripsi akan ditampilkan di sini.
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Mengenkripsi kode...</div>
+                </div>
+                <pre class="code-content" id="codeContent" style="display: none;"></pre>
+            </div>
+            <div class="action-buttons">
+                <button class="copy-btn" id="copyBtn">
+                    <i class="fas fa-copy"></i> Salin
+                </button>
+                <button class="download-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+        
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Kembali ke Menu Utama
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const codeInput = document.getElementById('codeInput');
+            const fileInput = document.getElementById('fileInput');
+            const fileUploadContainer = document.getElementById('fileUploadContainer');
+            const fileName = document.getElementById('fileName');
+            const encryptBtn = document.getElementById('encryptBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const resultSection = document.getElementById('resultSection');
+            const placeholder = document.getElementById('placeholder');
+            const loading = document.getElementById('loading');
+            const codeContent = document.getElementById('codeContent');
+
+            let currentEncryptedCode = '';
+
+            // File upload handling
+            fileUploadContainer.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.name.endsWith('.js')) {
+                        fileName.textContent = `File: ${file.name}`;
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            codeInput.value = e.target.result;
+                        };
+                        reader.readAsText(file);
+                    } else {
+                        alert('Hanya file JavaScript (.js) yang didukung!');
+                        fileInput.value = '';
+                        fileName.textContent = '';
+                    }
+                }
+            });
+
+            // Drag and drop functionality
+            fileUploadContainer.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadContainer.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                fileUploadContainer.style.background = 'rgba(255, 255, 255, 0.15)';
+            });
+
+            fileUploadContainer.addEventListener('dragleave', () => {
+                fileUploadContainer.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                fileUploadContainer.style.background = 'rgba(255, 255, 255, 0.05)';
+            });
+
+            fileUploadContainer.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadContainer.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                fileUploadContainer.style.background = 'rgba(255, 255, 255, 0.05)';
+                
+                const file = e.dataTransfer.files[0];
+                if (file && file.name.endsWith('.js')) {
+                    fileInput.files = e.dataTransfer.files;
+                    fileName.textContent = `File: ${file.name}`;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        codeInput.value = e.target.result;
+                    };
+                    reader.readAsText(file);
+                } else {
+                    alert('Hanya file JavaScript (.js) yang didukung!');
+                }
+            });
+
+            // JavaScript Obfuscation Function
+            function obfuscateJavaScript(code) {
+                // Simple obfuscation techniques
+                return code
+                    // Encode strings
+                    .replace(/"(.*?)"/g, (match, p1) => `String.fromCharCode(${p1.split('').map(c => c.charCodeAt(0)).join(',')})`)
+                    .replace(/'(.*?)'/g, (match, p1) => `String.fromCharCode(${p1.split('').map(c => c.charCodeAt(0)).join(',')})`)
+                    
+                    // Obfuscate variable names
+                    .replace(/\b(var|let|const)\s+(\w+)/g, (match, p1, p2) => {
+                        if (p2.length > 2) {
+                            return `${p1} ${generateObfuscatedName()}`;
+                        }
+                        return match;
+                    })
+                    
+                    // Obfuscate function names
+                    .replace(/\bfunction\s+(\w+)/g, (match, p1) => {
+                        if (p1.length > 2) {
+                            return `function ${generateObfuscatedName()}`;
+                        }
+                        return match;
+                    })
+                    
+                    // Add random comments
+                    .replace(/\n/g, '\n/*' + generateRandomString(10) + '*/\n')
+                    
+                    // Split strings
+                    .replace(/console\.log/g, 'console["l"+"o"+"g"]');
+            }
+
+            function generateObfuscatedName() {
+                const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                let result = '_';
+                for (let i = 0; i < 7; i++) {
+                    result += chars[Math.floor(Math.random() * chars.length)];
+                }
+                return result;
+            }
+
+            function generateRandomString(length) {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                for (let i = 0; i < length; i++) {
+                    result += chars[Math.floor(Math.random() * chars.length)];
+                }
+                return result;
+            }
+
+            // Advanced obfuscation with multiple techniques
+            function advancedObfuscate(code) {
+                try {
+                    // More sophisticated obfuscation
+                    let obfuscated = code;
+                    
+                    // 1. String encoding
+                    obfuscated = obfuscated.replace(/["']([^"']*)["']/g, (match, str) => {
+                        if (str.length > 0) {
+                            const encoded = str.split('').map(char => 
+                                `\\x${char.charCodeAt(0).toString(16).padStart(2, '0')}`
+                            ).join('');
+                            return `"${encoded}"`;
+                        }
+                        return match;
+                    });
+                    
+                    // 2. Variable name obfuscation
+                    const variables = new Set();
+                    const variableRegex = /\b(var|let|const)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g;
+                    let match;
+                    
+                    while ((match = variableRegex.exec(obfuscated)) !== null) {
+                        variables.add(match[2]);
+                    }
+                    
+                    variables.forEach(variable => {
+                        if (variable.length > 2) {
+                            const newName = generateObfuscatedName();
+                            const regex = new RegExp(`\\b${variable}\\b`, 'g');
+                            obfuscated = obfuscated.replace(regex, newName);
+                        }
+                    });
+                    
+                    // 3. Add junk code
+                    const junkCode = `
+    /* ${generateRandomString(20)} */
+    var ${generateObfuscatedName()} = function() { return false; };
+    /* ${generateRandomString(15)} */
+                    `.trim();
+                    
+                    obfuscated = junkCode + '\n' + obfuscated + '\n' + junkCode;
+                    
+                    return obfuscated;
+                } catch (error) {
+                    console.error('Advanced obfuscation failed:', error);
+                    return obfuscateJavaScript(code); // Fallback to simple obfuscation
+                }
+            }
+
+            // Encrypt code
+            encryptBtn.addEventListener('click', () => {
+                const code = codeInput.value.trim();
+                
+                if (!code) {
+                    alert('Masukkan kode JavaScript terlebih dahulu atau upload file!');
+                    return;
+                }
+                
+                // Tampilkan loading state
+                resultSection.style.display = 'block';
+                placeholder.style.display = 'none';
+                codeContent.style.display = 'none';
+                loading.style.display = 'flex';
+                copyBtn.disabled = true;
+                downloadBtn.disabled = true;
+                
+                // Scroll ke hasil
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Simulate processing time
+                setTimeout(() => {
+                    try {
+                        // Use advanced obfuscation
+                        currentEncryptedCode = advancedObfuscate(code);
+                        
+                        // Tampilkan hasil
+                        loading.style.display = 'none';
+                        codeContent.textContent = currentEncryptedCode;
+                        codeContent.style.display = 'block';
+                        copyBtn.disabled = false;
+                        downloadBtn.disabled = false;
+                        
+                    } catch (error) {
+                        console.error('Encryption error:', error);
+                        loading.style.display = 'none';
+                        placeholder.textContent = 'Terjadi kesalahan saat mengenkripsi kode.';
+                        placeholder.style.display = 'block';
+                        copyBtn.disabled = true;
+                        downloadBtn.disabled = true;
+                    }
+                }, 1500);
+            });
+
+            // Copy to clipboard
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(currentEncryptedCode)
+                    .then(() => {
+                        const originalText = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalText;
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        alert('Gagal menyalin kode ke clipboard');
+                    });
+            });
+
+            // Download encrypted code
+            downloadBtn.addEventListener('click', () => {
+                const blob = new Blob([currentEncryptedCode], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'encrypted-code.js';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        });
+    </script>
+</body>
+</html>

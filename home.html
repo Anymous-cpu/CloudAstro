@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sky Island - Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            min-height: 100vh;
+            padding: 16px;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .title {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .tools-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .tool-card:active {
+            transform: scale(0.98);
+        }
+
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .tool-text {
+            color: white;
+            flex: 1;
+        }
+
+        .tool-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .tool-desc {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+        }
+
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            opacity: 0.7;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 35px;
+            top: 10%;
+            left: -40px;
+            animation: float 25s infinite linear;
+        }
+
+        .cloud-2 {
+            width: 120px;
+            height: 40px;
+            top: 25%;
+            right: -50px;
+            animation: float 30s infinite linear reverse;
+        }
+
+        .cloud-3 {
+            width: 80px;
+            height: 30px;
+            bottom: 20%;
+            left: -30px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(-100px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            
+            .container {
+                padding: 15px;
+                gap: 25px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .title {
+                font-size: 28px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+            }
+            
+            .tool-card {
+                padding: 15px;
+            }
+            
+            .tool-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .title {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .tool-card {
+                padding: 12px;
+            }
+            
+            .tool-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+
+        /* Landscape mode */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 8px;
+            }
+            
+            .container {
+                padding: 10px;
+                gap: 15px;
+            }
+            
+            .logo-section {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Prevent zoom on iOS */
+        input, select, textarea {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    
+    <div class="container">
+        <div class="logo-section">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Logo Sky Island" class="logo">
+            <h1 class="title">Sky Island</h1>
+            <p class="subtitle">Platform hosting membantu user/Developer</p>
+        </div>
+        
+        <div class="tools-section">
+            <a href="create-sc.html" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="tool-text">
+                    <div class="tool-title">Create Script</div>
+                    <div class="tool-desc">Buat dan kelola script kustom untuk kebutuhan Anda</div>
+                </div>
+            </a>
+            
+            <a href="enc.html" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="tool-text">
+                    <div class="tool-title">Encrypt Code</div>
+                    <div class="tool-desc">Enkripsi kode Anda untuk keamanan tambahan</div>
+                </div>
+            </a>
+            
+            <a href="source.html" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-file-code"></i>
+                </div>
+                <div class="tool-text">
+                    <div class="tool-title">Source Code</div>
+                    <div class="tool-desc">Akses dan kelola kode sumber proyek Anda</div>
+                </div>
+            </a>
+            
+            <a href="recode.html" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="tool-text">
+                    <div class="tool-title">Decrypt code</div>
+                    <div class="tool-desc">Buat dan konfigurasi MetaTrader untuk trading</div>
+                </div>
+            </a>
+        </div>
+        
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Kembali ke Halaman Utama
+        </a>
+    </div>
+
+    <script>
+        // Animasi untuk tool cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const toolCards = document.querySelectorAll('.tool-card');
+            
+            toolCards.forEach((card, index) => {
+                // Tambahkan delay untuk animasi masuk
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>
