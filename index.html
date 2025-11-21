@@ -3,683 +3,962 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sky Island - Marketplace Hosting</title>
+    <title>Galaxy Realm | Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
         body {
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
-            min-height: 100vh;
-            padding: 16px;
             overflow-x: hidden;
-            touch-action: manipulation;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-
-        .container {
-            max-width: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-            padding: 20px;
-        }
-
-        .logo-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .title {
             color: white;
-            font-size: 32px;
-            font-weight: 800;
-            text-align: center;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            background: #000;
+            padding: 16px;
+            touch-action: manipulation;
         }
 
-        .subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 18px;
-            text-align: center;
-            max-width: 500px;
-            line-height: 1.5;
-        }
-
-        /* Video Thumbnail Section */
-        .video-section {
-            width: 100%;
-            max-width: 500px;
-            margin: 10px 0;
-        }
-
-        .video-thumbnail {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-        }
-
-        .video-thumbnail img {
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            z-index: -2;
         }
 
-        .video-thumbnail:hover img {
-            transform: scale(1.05);
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #1a2980;
-            font-size: 24px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .play-button:hover {
-            background: white;
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        .video-modal {
-            display: none;
+        /* Autoplay Prompt */
+        .autoplay-prompt {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .video-modal iframe {
-            width: 90%;
-            max-width: 800px;
-            aspect-ratio: 16/9;
-            border-radius: 10px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Audio Player Section */
-        .audio-section {
-            width: 100%;
-            max-width: 500px;
-            margin: 10px 0;
-        }
-
-        .audio-player {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .audio-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .audio-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .audio-text {
-            color: white;
-            flex: 1;
-        }
-
-        .audio-title {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .audio-desc {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .audio-controls {
-            display: flex;
             align-items: center;
-            gap: 15px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
-        .audio-progress {
-            flex: 1;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
+        .autoplay-content {
+            background: rgba(10, 14, 42, 0.95);
+            padding: 3rem;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 500px;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.5);
         }
 
-        .audio-progress-bar {
-            height: 100%;
-            background: white;
-            width: 0%;
-            border-radius: 5px;
-            transition: width 0.1s linear;
+        .autoplay-content h2 {
+            color: #9370db;
+            margin-bottom: 1rem;
+            font-size: 2rem;
         }
 
-        .audio-time {
+        .autoplay-content p {
+            color: #d8bfd8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .enable-audio-btn {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
             color: white;
-            font-size: 12px;
-            min-width: 100px;
-            text-align: right;
-        }
-
-        .audio-btn {
-            background: none;
             border: none;
-            color: white;
-            font-size: 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(75, 0, 130, 0.5);
+        }
+
+        .enable-audio-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(75, 0, 130, 0.7);
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(10, 14, 42, 0.85);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .taskbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .taskbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .taskbar-logo i {
+            font-size: 1.5rem;
+            color: #9370db;
+            text-shadow: 0 0 10px rgba(147, 112, 219, 0.8);
+        }
+
+        .taskbar-logo span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #9370db;
+            letter-spacing: 1px;
+        }
+
+        .version-badge {
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 0 10px rgba(75, 0, 130, 0.5);
+        }
+
+        .taskbar-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .taskbar-btn {
+            padding: 8px 20px;
+            background: rgba(138, 43, 226, 0.2);
+            color: #d8bfd8;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .taskbar-btn:hover {
+            background: rgba(138, 43, 226, 0.4);
+            color: white;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .taskbar-btn i {
+            font-size: 0.9rem;
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            z-index: 1;
+            width: 85%;
+            max-width: 500px;
+            padding: 3rem;
+            background: rgba(10, 14, 42, 0.75);
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5),
+                        0 0 80px rgba(75, 0, 130, 0.3),
+                        0 0 120px rgba(0, 100, 200, 0.2);
+            animation: fadeIn 1.5s ease-out;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #4b0082, #8a2be2, #1e90ff, #00bfff, #4b0082);
+            z-index: -1;
+            border-radius: 27px;
+            animation: borderGlow 8s linear infinite;
+            background-size: 400% 400%;
+            opacity: 0.7;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 14, 42, 0.85);
+            border-radius: 25px;
+            z-index: -1;
+        }
+
+        /* Logo Galaxy */
+        .galaxy-logo {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #1a1a5e, #0d0d2e);
+            box-shadow: 0 0 25px rgba(75, 0, 130, 0.7),
+                        inset 0 0 30px rgba(138, 43, 226, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease;
+            z-index: 2;
+            animation: galaxyRotate 15s linear infinite;
+            border: 2px solid rgba(138, 43, 226, 0.5);
         }
 
-        .audio-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .galaxy-logo::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 70% 70%, #4b0082, transparent 70%);
+            animation: nebulaPulse 8s ease-in-out infinite alternate;
         }
 
-        .features {
+        .galaxy-logo::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffd700, #ff8c00, transparent 70%);
+            filter: blur(5px);
+            opacity: 0.7;
+            animation: starTwinkle 3s ease-in-out infinite alternate;
+        }
+
+        .galaxy-logo i {
+            font-size: 2rem;
+            color: #9370db;
+            z-index: 3;
+            text-shadow: 0 0 10px rgba(147, 112, 219, 0.8);
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #9370db;
+            text-shadow: 0 0 25px rgba(147, 112, 219, 0.8),
+                         0 0 40px rgba(75, 0, 130, 0.6);
+            animation: logoPulse 3s ease-in-out infinite alternate;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #9370db, #8a2be2, #1e90ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #b19cd9;
+            font-weight: 400;
+            text-shadow: 0 0 10px rgba(177, 156, 217, 0.5);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            color: #d8bfd8;
+            font-weight: 300;
+            padding: 0 1rem;
+        }
+
+        /* Form Login */
+        .login-form {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        .feature-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .input-group {
+            position: relative;
+            width: 100%;
         }
 
-        .feature-card:active {
-            transform: scale(0.98);
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9370db;
+            font-size: 1.2rem;
+            z-index: 1;
         }
 
-        .feature-icon {
+        .input-field {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            border-radius: 15px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #9370db;
+            box-shadow: 0 0 15px rgba(147, 112, 219, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .input-field::placeholder {
+            color: #b19cd9;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(45deg, #4b0082, #8a2be2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(75, 0, 130, 0.5),
+                        0 0 30px rgba(138, 43, 226, 0.4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            z-index: 1;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(75, 0, 130, 0.7),
+                        0 0 40px rgba(138, 43, 226, 0.6);
+            letter-spacing: 1px;
+        }
+
+        .btn:active {
+            transform: translateY(-2px);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #8a2be2, #4b0082, #8a2be2);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: 50px;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.6s;
+            z-index: -1;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        /* Register Link */
+        .register-link {
+            margin-top: 2rem;
+            color: #d8bfd8;
+            font-size: 1rem;
+        }
+
+        .register-link a {
+            color: #9370db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: #8a2be2;
+            text-shadow: 0 0 10px rgba(147, 112, 219, 0.7);
+        }
+
+        /* Error Message */
+        .error-message {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            display: none;
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(147, 112, 219, 0.15);
+            animation: float 20s infinite linear;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 5%;
+            animation-duration: 25s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 80%;
+            left: 90%;
+            animation-duration: 30s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 92%;
+            animation-duration: 20s;
+        }
+
+        /* Audio control */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(10, 14, 42, 0.8);
+            border-radius: 50%;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        .feature-text {
-            color: white;
-        }
-
-        .feature-title {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .feature-desc {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .cta-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 20px;
-        }
-
-        .get-started-btn {
-            background: linear-gradient(135deg, #1a2980, #26d0ce);
-            color: white;
-            border: none;
-            padding: 18px 30px;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: 700;
             cursor: pointer;
+            z-index: 10;
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(26, 41, 128, 0.4);
-            text-align: center;
-            text-decoration: none;
-            display: block;
         }
 
-        .get-started-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 5px 15px rgba(26, 41, 128, 0.4);
+        .audio-control:hover {
+            transform: scale(1.1);
+            background: rgba(10, 14, 42, 0.9);
         }
 
-        .cloud {
-            position: fixed;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            opacity: 0.7;
-            z-index: -1;
-            pointer-events: none;
+        .audio-control i {
+            font-size: 1.5rem;
+            color: #9370db;
         }
 
-        .cloud-1 {
-            width: 100px;
-            height: 35px;
-            top: 10%;
-            left: -40px;
-            animation: float 25s infinite linear;
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .cloud-2 {
-            width: 120px;
-            height: 40px;
-            top: 25%;
-            right: -50px;
-            animation: float 30s infinite linear reverse;
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
-        .cloud-3 {
-            width: 80px;
-            height: 30px;
-            bottom: 20%;
-            left: -30px;
-            animation: float 20s infinite linear;
+        @keyframes logoPulse {
+            from {
+                transform: scale(1);
+                text-shadow: 0 0 25px rgba(147, 112, 219, 0.8);
+            }
+            to {
+                transform: scale(1.05);
+                text-shadow: 0 0 30px rgba(147, 112, 219, 1),
+                             0 0 50px rgba(75, 0, 130, 0.6);
+            }
         }
 
         @keyframes float {
             0% {
-                transform: translateX(-100px);
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -50px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
             }
             100% {
-                transform: translateX(calc(100vw + 100px));
+                transform: translate(0, 0) rotate(360deg);
             }
         }
 
-        /* Mobile-specific optimizations */
-        @media (max-width: 480px) {
-            body {
-                padding: 12px;
+        /* Animasi untuk logo galaxy */
+        @keyframes galaxyRotate {
+            0% {
+                transform: translateX(-50%) rotate(0deg);
             }
-            
-            .container {
-                padding: 15px;
-                gap: 25px;
+            100% {
+                transform: translateX(-50%) rotate(360deg);
+            }
+        }
+
+        @keyframes nebulaPulse {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes starTwinkle {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.9;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
             }
             
             .logo {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .title {
-                font-size: 28px;
+                font-size: 3.5rem;
             }
             
             .subtitle {
-                font-size: 16px;
+                font-size: 1.3rem;
             }
             
-            .feature-card {
-                padding: 15px;
+            p {
+                font-size: 1.1rem;
+                padding: 0;
             }
             
-            .feature-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-            
-            .get-started-btn {
-                padding: 16px 25px;
-                font-size: 16px;
-            }
-            
-            .play-button {
-                width: 60px;
-                height: 60px;
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .title {
-                font-size: 24px;
-            }
-            
-            .subtitle {
-                font-size: 14px;
-            }
-            
-            .feature-card {
-                padding: 12px;
-            }
-            
-            .feature-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-            
-            .audio-player {
-                padding: 15px;
-            }
-        }
-
-        /* Landscape mode */
-        @media (max-height: 500px) and (orientation: landscape) {
-            body {
-                padding: 8px;
+            .btn {
+                padding: 16px 40px;
+                font-size: 1.2rem;
             }
             
             .container {
-                padding: 10px;
-                gap: 15px;
+                width: 90%;
+                padding: 2.5rem;
+                margin-top: 70px;
             }
             
-            .logo-section {
-                margin-bottom: 10px;
+            .input-field {
+                padding: 12px 12px 12px 45px;
+            }
+            
+            .galaxy-logo {
+                width: 70px;
+                height: 70px;
+                top: -35px;
+            }
+            
+            .galaxy-logo i {
+                font-size: 1.7rem;
+            }
+            
+            .taskbar {
+                padding: 0 15px;
+            }
+            
+            .taskbar-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .taskbar-logo span {
+                font-size: 1rem;
+            }
+            
+            .autoplay-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .autoplay-content h2 {
+                font-size: 1.5rem;
             }
         }
 
-        /* Prevent zoom on iOS */
-        input, select, textarea {
-            font-size: 16px !important;
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .container {
+                padding: 2rem;
+                width: 92%;
+                margin-top: 65px;
+            }
+            
+            .input-field {
+                padding: 10px 10px 10px 40px;
+                font-size: 0.9rem;
+            }
+            
+            .galaxy-logo {
+                width: 60px;
+                height: 60px;
+                top: -30px;
+            }
+            
+            .galaxy-logo i {
+                font-size: 1.5rem;
+            }
+            
+            .taskbar {
+                height: 50px;
+                padding: 0 10px;
+            }
+            
+            .taskbar-logo span {
+                font-size: 0.9rem;
+            }
+            
+            .taskbar-btn {
+                padding: 5px 12px;
+                font-size: 0.75rem;
+            }
+            
+            .version-badge {
+                font-size: 0.7rem;
+                padding: 2px 8px;
+            }
+            
+            .autoplay-content {
+                padding: 1.5rem;
+            }
+            
+            .autoplay-content h2 {
+                font-size: 1.3rem;
+            }
+            
+            .enable-audio-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="cloud cloud-1"></div>
-    <div class="cloud cloud-2"></div>
-    <div class="cloud cloud-3"></div>
+    <!-- Video Background -->
+    <video id="video-background" autoplay muted loop playsinline>
+        <source src="https://files.catbox.moe/9n8cg6.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Autoplay Prompt -->
+    <div class="autoplay-prompt" id="autoplayPrompt">
+        <div class="autoplay-content">
+            <h2>🌌 Pengalaman Galaxy Lengkap</h2>
+            <p>Untuk pengalaman terbaik dengan audio kosmik, mohon aktifkan suara dengan menekan tombol di bawah ini.</p>
+            <button class="enable-audio-btn" id="enableAudio">
+                <i class="fas fa-volume-up"></i> Aktifkan Audio
+            </button>
+        </div>
+    </div>
     
-    <div class="container">
-        <div class="logo-section">
-            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Logo Sky Island" class="logo">
-            <h1 class="title">Sky Island</h1>
-            <p class="subtitle">Platform hosting embantu user dan developer</p>
-        </div>
-        
-        <!-- Video Thumbnail Section -->
-        <div class="video-section">
-            <div class="video-thumbnail" id="videoThumbnail">
-                <img src="https://files.catbox.moe/a21akk.png" alt="Video Thumbnail">
-                <div class="play-button">
-                    <i class="fas fa-play"></i>
-                </div>
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="taskbar-left">
+            <div class="taskbar-logo">
+                <i class="fas fa-tools"></i>
+                <span>Tools Kit</span>
+                <div class="version-badge">V2.0</div>
             </div>
         </div>
-        
-        <!-- Video Modal -->
-        <div class="video-modal" id="videoModal">
-            <div class="close-modal" id="closeModal">
-                <i class="fas fa-times"></i>
-            </div>
-            <iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        
-        <!-- Audio Player Section -->
-        <div class="audio-section">
-            <div class="audio-player">
-                <div class="audio-info">
-                    <div class="audio-icon">
-                        <i class="fas fa-music"></i>
-                    </div>
-                    <div class="audio-text">
-                        <div class="audio-title">Sky Island Introduction</div>
-                        <div class="audio-desc">Kenali lebih dalam tentang platform kami</div>
-                    </div>
-                </div>
-                <div class="audio-controls">
-                    <button class="audio-btn" id="playPauseBtn">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <div class="audio-progress" id="audioProgress">
-                        <div class="audio-progress-bar" id="audioProgressBar"></div>
-                    </div>
-                    <div class="audio-time" id="audioTime">0:00 / 0:00</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-globe"></i>
-                </div>
-                <div class="feature-text">
-                    <div class="feature-title">Jangkau Global</div>
-                    <div class="feature-desc">Akses pasar internasional dengan mudah</div>
-                </div>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-rocket"></i>
-                </div>
-                <div class="feature-text">
-                    <div class="feature-title">Mudah Digunakan</div>
-                    <div class="feature-desc">Antarmuka intuitif untuk semua kalangan</div>
-                </div>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="feature-text">
-                    <div class="feature-title">Keamanan Terjamin</div>
-                    <div class="feature-desc">Data dan transaksi Anda terlindungi</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="cta-section">
-            <a href="home.html" class="get-started-btn">
-                Get Started
+        <div class="taskbar-right">
+            <a href="https://t.me/sanzyych" target="_blank" class="taskbar-btn">
+                <i class="fab fa-telegram-plane"></i> Channel
             </a>
-            <p style="color: white; text-align: center; font-size: 14px; opacity: 0.8;">
-                Mulai perjalanan digital Anda sekarang!
-            </p>
+            <a href="https://t.me/sanzzygb" target="_blank" class="taskbar-btn">
+                <i class="fas fa-users"></i> Grup
+            </a>
+        </div>
+    </div>
+    
+    <!-- Kontrol audio -->
+    <div class="audio-control" id="audioControl">
+        <i class="fas fa-volume-mute"></i>
+    </div>
+    
+    <!-- Konten utama -->
+    <div class="container">
+        <!-- Logo Galaxy -->
+        <div class="galaxy-logo">
+            <i class="fas fa-user-astronaut"></i>
+        </div>
+        
+        <div class="logo">
+            <i class="fas fa-stars"></i>
+        </div>
+        <h1>Galaxy Realm</h1>
+        <div class="subtitle">©SanzyOfficial</div>
+        <p>Masuk ke galaksi tools untuk developer</p>
+        
+        <!-- Form Login -->
+        <form class="login-form" id="loginForm">
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorText">Username atau password salah</span>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" class="input-field" id="username" placeholder="Username" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="input-field" id="password" placeholder="Password" required>
+            </div>
+            
+            <button type="submit" class="btn">
+                <i class="fas fa-sign-in-alt"></i> Masuk ke Galaxy
+            </button>
+        </form>
+        
+        <div class="register-link">
+            Gak punya akun? <a href="https://t.me/whonever" target="_blank">Hubungi Admin</a>
         </div>
     </div>
 
     <script>
-        // Animasi untuk feature cards
+        // Data akun (bisa ditambahkan akun lain)
+        const users = [
+            { username: "admin", password: "admin123" },
+            { username: "sono", password: "sono123" },
+            { username: "sanzy", password: "sanzy123" },
+            { username: "user", password: "user123" }
+        ];
+
+        // Script untuk mengatasi masalah autoplay
         document.addEventListener('DOMContentLoaded', function() {
-            const featureCards = document.querySelectorAll('.feature-card');
+            const video = document.getElementById('video-background');
+            const audioControl = document.getElementById('audioControl');
+            const audioIcon = audioControl.querySelector('i');
+            const autoplayPrompt = document.getElementById('autoplayPrompt');
+            const enableAudioBtn = document.getElementById('enableAudio');
+            const loginForm = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            let isMuted = true;
             
-            featureCards.forEach((card, index) => {
+            // Coba unmute video secara otomatis
+            function tryUnmuteVideo() {
+                video.muted = false;
+                video.play().then(() => {
+                    // Jika berhasil, sembunyikan prompt
+                    autoplayPrompt.style.display = 'none';
+                    isMuted = false;
+                    audioIcon.classList.remove('fa-volume-mute');
+                    audioIcon.classList.add('fa-volume-up');
+                }).catch(error => {
+                    // Jika gagal, tampilkan prompt
+                    console.log("Autoplay dengan audio dicegah: ", error);
+                    autoplayPrompt.style.display = 'flex';
+                    video.muted = true;
+                });
+            }
+            
+            // Coba memutar video dengan audio pertama kali
+            tryUnmuteVideo();
+            
+            // Tombol enable audio
+            enableAudioBtn.addEventListener('click', function() {
+                video.muted = false;
+                video.play().then(() => {
+                    autoplayPrompt.style.display = 'none';
+                    isMuted = false;
+                    audioIcon.classList.remove('fa-volume-mute');
+                    audioIcon.classList.add('fa-volume-up');
+                });
+            });
+            
+            // Kontrol audio manual
+            audioControl.addEventListener('click', function() {
+                isMuted = !isMuted;
+                video.muted = isMuted;
+                
+                if (isMuted) {
+                    audioIcon.classList.remove('fa-volume-up');
+                    audioIcon.classList.add('fa-volume-mute');
+                } else {
+                    audioIcon.classList.remove('fa-volume-mute');
+                    audioIcon.classList.add('fa-volume-up');
+                }
+            });
+            
+            // Coba unmute ketika user berinteraksi dengan halaman
+            document.body.addEventListener('click', function() {
+                if (isMuted && autoplayPrompt.style.display === 'none') {
+                    tryUnmuteVideo();
+                }
+            }, { once: false });
+            
+            // Form login handler
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Cek kredensial
+                const user = users.find(u => u.username === username && u.password === password);
+                
+                if (user) {
+                    // Login berhasil
+                    errorMessage.style.display = 'none';
+                    
+                    // Animasi loading
+                    const btn = loginForm.querySelector('.btn');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengakses Galaxy...';
+                    btn.disabled = true;
+                    
+                    // Simulasi loading sebelum redirect
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1500);
+                } else {
+                    // Login gagal
+                    errorText.textContent = 'Username atau password salah!';
+                    errorMessage.style.display = 'block';
+                    
+                    // Animasi shake pada form
+                    loginForm.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        loginForm.style.animation = '';
+                    }, 500);
+                }
+            });
+            
+            // Animasi untuk input fields
+            const inputFields = document.querySelectorAll('.input-field');
+            
+            inputFields.forEach((input, index) => {
                 // Tambahkan delay untuk animasi masuk
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+                input.style.opacity = '0';
+                input.style.transform = 'translateY(20px)';
                 
                 setTimeout(() => {
-                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
+                    input.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    input.style.opacity = '1';
+                    input.style.transform = 'translateY(0)';
                 }, 300 + (index * 100));
             });
-            
-            // Video Modal Functionality
-            const videoThumbnail = document.getElementById('videoThumbnail');
-            const videoModal = document.getElementById('videoModal');
-            const videoFrame = document.getElementById('videoFrame');
-            const closeModal = document.getElementById('closeModal');
-            
-            // Ganti dengan URL video YouTube atau platform lainnya
-            const videoUrl = "https://files.catbox.moe/nuuob9.mp4";
-            
-            videoThumbnail.addEventListener('click', function() {
-                videoFrame.src = videoUrl + "?autoplay=1";
-                videoModal.style.display = 'flex';
-            });
-            
-            closeModal.addEventListener('click', function() {
-                videoModal.style.display = 'none';
-                videoFrame.src = "";
-            });
-            
-            // Close modal when clicking outside the video
-            videoModal.addEventListener('click', function(e) {
-                if (e.target === videoModal) {
-                    videoModal.style.display = 'none';
-                    videoFrame.src = "";
-                }
-            });
-            
-            // Audio Player Functionality
-            const audioPlayer = document.querySelector('.audio-player');
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            const audioProgress = document.getElementById('audioProgress');
-            const audioProgressBar = document.getElementById('audioProgressBar');
-            const audioTime = document.getElementById('audioTime');
-            
-            // Ganti dengan URL audio Anda
-            const audioUrl = "https://files.catbox.moe/fruv0v.mp3";
-            
-            const audio = new Audio(audioUrl);
-            let isPlaying = false;
-            
-            // Format waktu dari detik ke menit:detik
-            function formatTime(seconds) {
-                const min = Math.floor(seconds / 60);
-                const sec = Math.floor(seconds % 60);
-                return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-            }
-            
-            // Update progress bar dan waktu
-            function updateProgress() {
-                const progress = (audio.currentTime / audio.duration) * 100;
-                audioProgressBar.style.width = `${progress}%`;
-                audioTime.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-            }
-            
-            // Toggle play/pause
-            playPauseBtn.addEventListener('click', function() {
-                if (isPlaying) {
-                    audio.pause();
-                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                } else {
-                    audio.play();
-                    playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                }
-                isPlaying = !isPlaying;
-            });
-            
-            // Update progress bar saat audio diputar
-            audio.addEventListener('timeupdate', updateProgress);
-            
-            // Set progress bar saat diklik
-            audioProgress.addEventListener('click', function(e) {
-                const progressWidth = this.clientWidth;
-                const clickX = e.offsetX;
-                const duration = audio.duration;
-                
-                audio.currentTime = (clickX / progressWidth) * duration;
-            });
-            
-            // Reset play button ketika audio selesai
-            audio.addEventListener('ended', function() {
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                isPlaying = false;
-            });
-            
-            // Update waktu total ketika metadata audio dimuat
-            audio.addEventListener('loadedmetadata', function() {
-                audioTime.textContent = `0:00 / ${formatTime(audio.duration)}`;
-            });
         });
+
+        // Tambahkan animasi shake
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
-
 </html>
